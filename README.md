@@ -1,4 +1,7 @@
 All commands must be executed in the project directory (``gen_query_red_made``):
+### 0. Download data:
+- download **docs.tsv** from [Google drive (5 gb)](https://drive.google.com/file/d/11axOQXZe-sTrjrlRpFhy1KLMRp8535E3/view?usp=share_link)
+- replace current dummy file ``data/docs.tsv``
 
 ### 1. Create container:
 ``docker build -t db_red .``
