@@ -52,7 +52,8 @@ if __name__ == "__main__":
     bs = int(sys.argv[2])
     shuffle_data = True if sys.argv[3] == 'True' else False
     q_generator = QueryGenerator('Dummy_Model', 'QUERIES_MODEL_1', 'QRELS_MODEL_1')
+    q_generator.creating_tables()
     test_iterator = DBIterator(table_name, bs, shuffle_data)
     for batch in test_iterator:
         q_generator.generate_query(batch)
-        break
+        # break

@@ -9,10 +9,18 @@ class QueryGenerator():
         self.connection = sqlite3.connect(db_path)
         self.table_queries = table_queries
         self.table_qrels = table_qrels
-        self.sql1 = f"delete from {self.table_queries}"
-        self.sql2 = f"delete from {self.table_qrels}"
-        self.connection.execute(self.sql1)
-        self.connection.execute(self.sql2)
+        self.connection.execute(('drop table if exists {table};'.format(table=self.table_queries)))
+        self.connection.execute(('drop table if exists {table};'.format(table=self.table_qrels)))
+
+    def creating_tables(self):
+        create_table = 'create table {table}({field_1} {type_1} primary key, {field_2} {type_2}, {field_3} {type_3});'
+        create_index = 'create {option} index {ind}_{i}_id on {table}({field});'
+        self.connection.execute(create_table.format(table=self.table_queries, field_1='id', type_1='number', field_2='query_id', type_2='number', field_3='data', type_3='text'))
+        self.connection.execute(create_table.format(table=self.table_qrels, field_1='id', type_1='number', field_2='query_id', type_2='number', field_3='doc_id', type_3='number'))
+        self.connection.execute(create_index.format(option='unique', ind=self.table_queries, i='1', table=self.table_queries, field='query_id'))
+        self.connection.execute(create_index.format(option='', ind=self.table_qrels, i='1', table=self.table_qrels, field='query_id'))
+        self.connection.execute(create_index.format(option='', ind=self.table_qrels, i='2', table=self.table_qrels, field='doc_id'))
+
 
     def generate_query(self, batch, write=True):
         df_batch = pd.DataFrame(batch)
