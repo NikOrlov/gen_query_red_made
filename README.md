@@ -48,4 +48,4 @@ Iterator's response:
 ### DB schema:
 (foreign keys removed due to the missing docs.data)
 
-![alt text](https://user-images.githubusercontent.com/21123064/234050815-045b2d36-a2fb-44f9-b004-3ee72e37040f.png)
+![alt text](https://user-images.githubusercontent.com/21123064/235137898-f2208f31-f9fc-46e3-b3c3-aadc46639c13.png)
