@@ -1,7 +1,9 @@
 All commands must be executed in the project directory (``gen_query_red_made``):
-### 0. Download data:
-- download **docs.tsv** from [Google drive (5 gb)](https://drive.google.com/file/d/11axOQXZe-sTrjrlRpFhy1KLMRp8535E3/view?usp=share_link)
-- replace current dummy file ``data/docs.tsv``
+### 0. Download extended docs data (optional)
+By default DB contains docs, only represented in qrels (5185 docs), in case if you want to test pipeline on large amount of docs, you can download larger data.tsv file: 
+
+- download and extract data-file from [Google drive (5 gb, 400k docs)](https://drive.google.com/file/d/1rF6nZE-z32lR2A-AS1gVZUL4mDKP-C4O/view?usp=sharing) 
+- replace existing: ``mv docs_400k.tsv data/docs.tsv``
 
 ### 1. Create container:
 ``docker build -t db_red .``
