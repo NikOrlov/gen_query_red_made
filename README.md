@@ -1,4 +1,9 @@
 All commands must be executed in the project directory (``gen_query_red_made``):
+### 0. Download extended docs data (optional)
+By default DB contains docs, only represented in qrels (5185 docs), in case if you want to test pipeline on large amount of docs, you can download larger data.tsv file: 
+
+- download and extract data-file from [Google drive (5 gb, 400k docs)](https://drive.google.com/file/d/1rF6nZE-z32lR2A-AS1gVZUL4mDKP-C4O/view?usp=sharing) 
+- replace existing: ``mv docs_400k.tsv data/docs.tsv``
 
 ### 1. Create container:
 ``docker build -t db_red .``
@@ -45,8 +50,7 @@ Iterator's response:
 ### DB schema:
 (foreign keys removed due to the missing docs.data)
 
-![alt text](https://user-images.githubusercontent.com/21123064/234050815-045b2d36-a2fb-44f9-b004-3ee72e37040f.png)
-
+![alt text](https://user-images.githubusercontent.com/21123064/235138482-c678a431-a8aa-43fa-bb46-568509893351.png)
 
 ### Pipeline v0.1: Documents indexing and metrics calculation
 
@@ -105,8 +109,3 @@ Test example:
 ``python metrics_calc/main.py eval QRELS test_exp``
 
 You will see results of experiment in folder: experiments_runs/<experiment_name>
-
-
-
-
-

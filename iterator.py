@@ -5,7 +5,7 @@ from utils import DB_PATH
 
 
 class DBIterator:
-    def __init__(self, table, batch_size=1, shuffle=False, db_path=DB_PATH):
+    def __init__(self, table, batch_size=16, shuffle=False, db_path=DB_PATH):
         self.con = sqlite3.connect(db_path)
         self.table = table
         self.shuffle = shuffle
@@ -45,11 +45,9 @@ class DBIterator:
 
 
 if __name__ == "__main__":
-    # table_name = 'docs'
     table_name = sys.argv[1]
     bs = int(sys.argv[2])
-    shuffle_data = True if sys.argv[3] == 'True' else False
-
+    shuffle_data = True if sys.argv[3] == "True" else False
     test_iterator = DBIterator(table_name, bs, shuffle_data)
     for batch in test_iterator:
         print(batch)
