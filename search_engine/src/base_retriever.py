@@ -40,7 +40,18 @@ class BaseRetriever:
             if row_limit and row_count >= row_limit:
                 break
             row_count += 1
-            yield {"id": row[1], "text": row[2]}
+            # print(row)
+            # break
+            try:
+                concat_row = " ".join([row[4], row[2]])
+            except:
+                if row[4] is str and row[2] is None:
+                    concat_row = row[4]
+                else:
+                    # print('Find exception: ', 'text: ', row[4], '\n', 'query: ', row[2])
+                    continue
+
+            yield {"id": row[3], "text": concat_row}
 
         conn.close()
 
