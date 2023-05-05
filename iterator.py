@@ -3,6 +3,8 @@ import random
 import sqlite3
 from utils import DB_PATH
 
+from query_generator import QueryGenerator
+
 
 class DBIterator:
     def __init__(self, table, batch_size=1, shuffle=False, db_path=DB_PATH):
@@ -49,7 +51,8 @@ if __name__ == "__main__":
     table_name = sys.argv[1]
     bs = int(sys.argv[2])
     shuffle_data = True if sys.argv[3] == 'True' else False
-
+    q_generator = QueryGenerator('Dummy_Model', 'DEV_MODEL_0')
     test_iterator = DBIterator(table_name, bs, shuffle_data)
     for batch in test_iterator:
-        print(batch)
+        q_generator.generate_query(batch)
+        # break
