@@ -5,11 +5,18 @@ By default DB contains docs, only represented in qrels (5185 docs), in case if y
 - download and extract data-file from [Google drive (5 gb, 400k docs)](https://drive.google.com/file/d/1rF6nZE-z32lR2A-AS1gVZUL4mDKP-C4O/view?usp=sharing) 
 - replace existing: ``mv docs_400k.tsv data/docs.tsv``
 
-### 1. Create container:
-``docker build -t db_red .``
+### 1. Create virtual environment:
+```
+python -m venv .env
+source .env/bin/activate
+pip install -r requirements.txt
+```
 
-### 2. Run container and upload data:
-``docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to_project/gen_query_red_made/data:/data db_red ./db_init.sh``
+### 2. Create and run DB container:
+```
+docker build -t db_red .
+docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to_project/gen_query_red_made/data:/data db_red ./db_init.sh``
+```
 
 ### 3. Iterator usage:
 ``python iterator.py table_name batch_size shuffle``

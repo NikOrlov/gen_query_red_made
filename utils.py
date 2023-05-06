@@ -20,4 +20,5 @@ EXPERIMENT_INIT = (
 )
 
 LOG_PATH = "pipeline.log"
-logger.add(LOG_PATH, format="{time:YYYY-MM-DD at HH:mm:ss} {level} {message}", level="DEBUG")
+logger.add(LOG_PATH, colorize=True,
+           format="{time:YYYY-MM-DD at HH:mm:ss} {function: <20} {level: <8} {message}", level="DEBUG")

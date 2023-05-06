@@ -1,4 +1,5 @@
 import sys
+import os
 import sqlite3
 import click
 import json
@@ -37,6 +38,7 @@ def start_run(queries_table, exp_name, cutoff):
 
     logger.debug(f"Saving experiments data to: {experiments_runs_path}")
 
+    os.makedirs(os.path.dirname(experiments_runs_path), exist_ok=True)
     with open(experiments_runs_path, "w") as run_f:
         json.dump(run_dict, run_f)
 
