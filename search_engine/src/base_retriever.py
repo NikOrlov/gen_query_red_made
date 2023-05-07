@@ -40,18 +40,27 @@ class BaseRetriever:
             if row_limit and row_count >= row_limit:
                 break
             row_count += 1
-            # print(row)
-            # break
-            try:
-                concat_row = " ".join([row[4], row[2]])
-            except:
-                if row[4] is str and row[2] is None:
-                    concat_row = row[4]
-                else:
-                    # print('Find exception: ', 'text: ', row[4], '\n', 'query: ', row[2])
-                    continue
 
-            yield {"id": row[3], "text": concat_row}
+            # JOINED case
+            if len(row) == 5:
+                doc_id = row[3]
+                try:
+                    concat_row = " ".join([row[4], row[2]])
+                except:
+                    if row[4] is str and row[2] is None:
+                        concat_row = row[4]
+
+                    else:
+                        # print('Find exception: ', 'text: ', row[4], '\n', 'query: ', row[2])
+                        continue
+            # DOCS case
+            elif len(row) == 3:
+                concat_row = row[2]
+                doc_id = row[1]
+            else:
+                raise Exception(f'Unknown DOCS/JOINED table format, received sample: {row}')
+
+            yield {"id": doc_id, "text": concat_row}
 
         conn.close()
 
@@ -71,6 +80,8 @@ class BaseRetriever:
             collection = read_csv(
                 path, delimiter="\t", generator=True, callback=callback
             )
+        else:
+            raise Exception(f'Unknown format, supported: jsonl, csv, tsv. Got: {kind}')
 
         return collection
 
