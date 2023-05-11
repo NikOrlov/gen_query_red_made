@@ -1,5 +1,5 @@
 #!/bin/sh
-mkdir /volume/db
+mkdir -p /volume/db
 sqlite3 /volume/db/project.db << EOF
 .read /init.sql
 .separator \t

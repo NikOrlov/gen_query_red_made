@@ -1,7 +1,7 @@
 import sys
 import random
 import sqlite3
-from utils import DB_PATH
+from config.utils import DB_PATH
 
 
 class DBIterator:

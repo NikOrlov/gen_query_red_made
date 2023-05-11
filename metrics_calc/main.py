@@ -4,8 +4,7 @@ import sqlite3
 import click
 from ranx import Qrels, Run, evaluate
 
-sys.path.append("../gen_query_red_made")
-from utils import logger, DB_PATH
+from config.utils import logger, DB_PATH
 
 
 # python metrics_calc/main.py eval QRELS test_exp
@@ -39,7 +38,7 @@ def eval(qrels_table, exp_name):
 
     logger.info(f"Score MRR@100: {score}")
 
-    experiments_results_path = f"metrics_calc/results.jsonl"
+    experiments_results_path = f"results/results.jsonl"
     logger.info(f"Save experiments result to: metrics_calc/results.jsonl")
 
     with open(experiments_results_path, "a+") as results_f:
