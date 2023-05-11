@@ -1,6 +1,6 @@
 from loguru import logger
 
-DB_PATH = "volume/db/project.db"
+DB_PATH = "../volume/db/project.db"
 
 EXPERIMENT_INIT = (
     "DROP TABLE IF EXISTS {TABLE_QUERIES}; "
@@ -19,6 +19,6 @@ EXPERIMENT_INIT = (
     "LEFT JOIN {TABLE_QUERIES} Q ON QR.QUERY_ID = Q.QUERY_ID;"
 )
 
-LOG_PATH = "pipeline.log"
+LOG_PATH = "logs/pipeline.log"
 logger.add(LOG_PATH, colorize=True,
            format="{time:YYYY-MM-DD at HH:mm:ss} {function: <20} {level: <8} {message}", level="DEBUG")

@@ -59,16 +59,25 @@ Iterator's response:
 
 ![alt text](https://user-images.githubusercontent.com/21123064/235138482-c678a431-a8aa-43fa-bb46-568509893351.png)
 
-### Pipeline v0.1: Documents indexing and metrics calculation
+### Pipeline v0.2: Documents indexing and metrics calculation
 
 #### Step 1
 The first step of the pipeline is document indexing and
-**search engine** service can help us with this.
-To start indexing documents, you must be in the root directory of the project.
+**search engine** service can help us with this. <br>
+Build docker image (from root) <br>
+``docker build search_engine/ -t search_engine:0.2``
+
+Then use search_engine.sh to interact with service:
 
 Command format:
+``./search_engine.sh <COMMAND> <SQL TABLE> <EXPERIMENT NAME>``
 
-``python search_engine/main.py <COMMAND> <TABLE_NAME> <EXPERIMENT_NAME>``
+COMMAND - index/start-run <br>
+SQL TABLE - DOCS/JOINED <br>
+EXPERIMENT - any string u want <br>
+
+Command example:
+``./search_engine.sh index DOCS no_queries_test ``
 
 First argument can be one of two commands: **index** and **start-run**. <br/>
 In first step case we should use **index** command.
@@ -79,40 +88,39 @@ TODO: write column names
 Third argument is name of experiment. **Attention**: you should use this name in all other steps.
 
 
-Test example: 
-
-``python search_engine/main.py index JOINED test_exp``
-
 #### Step 2
 
 Next step is **make a run**:
 We should create a .jsonl file that will contain work result of search engine: 
 top-100 best search engine answers on each query.
 
+Command format: <br>
+``./search_engine.sh <COMMAND> <SQL TABLE> <EXPERIMENT NAME> <--b> <--k>``
 
-Command format is the same as in the previous step.
+COMMAND - start-run <br>
+b - bm25 coefficient <br>
+k - bm25 coefficient
 
 Now In first argument you should use another command: **start-run**
 
-In second argument you should specify name of table containing queries.
-
-In last argument you should use experiment name from step 1.
-
 Test example:
 
-``python search_engine/main.py start-run QUERIES test_exp``
+``./search_engine.sh start-run QUERIES no_queries_test --b=0.4 --k=0.9``
 
-3. Last step is metrics calculation
+#### Step 3
+Last step is metrics calculation.
 
+First we should build docker of metrics_calc service: <br>
+``docker build metrics_calc/ -t metrics_calc:0.1``
 
-Command format:
-``python search_engine/main.py <COMMAND> <TABLE_NAME> <EXPERIMENT_NAME>``
+Command format: <br>
+``./metrics_calc.sh <COMMAND> <TABLE_NAME> <EXPERIMENT_NAME>``
 
 COMMAND = eval <br>
 TABLE_NAME = table with queries relationships <br>
 EXPERIMENT_NAME = like in previous steps
 
-Test example:
-``python metrics_calc/main.py eval QRELS test_exp``
+Test example: <br>
+``./metrics_calc.sh eval QRELS no_queries_test``
 
 You will see results of experiment in folder: experiments_runs/<experiment_name>

@@ -5,28 +5,37 @@ import click
 import json
 from src.sparse_retriever.sparse_retriever import SparseRetriever as SearchEngine
 
-sys.path.append("../gen_query_red_made")
-from utils import logger, DB_PATH
+from config.utils import logger, DB_PATH
 
 
 # python search_engine/main.py start-run QUERIES test_exp
 @click.command()
 @click.argument("queries_table")
 @click.argument("exp_name")
+@click.option("--b", default=0.75)
+@click.option("--k", default=1.2)
 @click.option("--cutoff", default=100)
-def start_run(queries_table, exp_name, cutoff):
+def start_run(queries_table, exp_name, b, k, cutoff):
     logger.info(
-        f"Start handling queries with params: {exp_name, queries_table, cutoff}"
+        f"Start handling queries with params: \n"
+        f"queries_table: {queries_table}, \n"
+        f"exp_name: {exp_name}, \n"
+        f"b: {b}, \n"
+        f"k: {k}, \n"
+        f"cutoff: {cutoff}"
     )
 
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     query = f"SELECT * FROM {queries_table}"
     se = SearchEngine.load(f"{exp_name}_index")
+    se.set_hyperparams(b=b, k=k)
 
     experiments_runs_path = f"experiments_runs/{exp_name}_run.jsonl"
 
     run_dict = {}
+    answers_deficit_count = 0
+    query_count = 0
     for q in c.execute(query):
         q_primary_id, q_id, q_text = q
         query_result = se.search(q_text, cutoff=100)
@@ -36,6 +45,11 @@ def start_run(queries_table, exp_name, cutoff):
         for qr in query_result:
             run_dict[q_id][qr["id"]] = str(qr["score"])
 
+        if len(run_dict[q_id]) < 100:
+            answers_deficit_count += 1
+        query_count += 1
+
+    logger.debug(f"{answers_deficit_count}/{query_count} dont have 100 answers")
     logger.debug(f"Saving experiments data to: {experiments_runs_path}")
 
     os.makedirs(os.path.dirname(experiments_runs_path), exist_ok=True)

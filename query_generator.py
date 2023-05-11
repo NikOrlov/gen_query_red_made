@@ -1,7 +1,7 @@
 import sys
 import sqlite3
 import pandas as pd
-from utils import DB_PATH, EXPERIMENT_INIT, logger
+from config.utils import DB_PATH, EXPERIMENT_INIT, logger
 from iterator import DBIterator
 
 

@@ -93,6 +93,11 @@ class SparseRetriever(BaseRetriever):
             dict(b=0.75, k1=1.2) if hyperparams is None else hyperparams
         )
 
+    def set_hyperparams(self, b=0.75, k=1.2):
+        self.hyperparams = (
+            dict(b=b, k1=k)
+        )
+
     def save(self):
         state = {
             "init_args": self.init_args,

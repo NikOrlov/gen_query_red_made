@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="retriv",
-    version="0.2.0",
-    author="Elias Bassani",
-    author_email="elias.bssn@gmail.com",
-    description="retriv: A Blazing-Fast Python Search Engine.",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    url="https://github.com/AmenRa/retriv",
+    name="",
+    version="",
+    author=" ",
+    author_email="",
+    description="",
+    long_description="",
+    long_description_content_type="",
+    url="",
     packages=setuptools.find_packages(),
     install_requires=[
         "numpy",
