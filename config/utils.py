@@ -19,6 +19,6 @@ EXPERIMENT_INIT = (
     "LEFT JOIN {TABLE_QUERIES} Q ON QR.QUERY_ID = Q.QUERY_ID;"
 )
 
-LOG_PATH = "pipeline.log"
+LOG_PATH = "logs/pipeline.log"
 logger.add(LOG_PATH, colorize=True,
            format="{time:YYYY-MM-DD at HH:mm:ss} {function: <20} {level: <8} {message}", level="DEBUG")
