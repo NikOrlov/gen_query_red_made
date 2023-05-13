@@ -47,11 +47,11 @@ class BaseRetriever:
                 try:
                     concat_row = " ".join([row[4], row[2]])
                 except:
-                    if row[4] is str and row[2] is None:
+                    if isinstance(row[4], str) and row[2] is None:
                         concat_row = row[4]
 
                     else:
-                        # print('Find exception: ', 'text: ', row[4], '\n', 'query: ', row[2])
+                        print('Find exception: ', 'text: ', row[4], '\n', 'query: ', row[2])
                         continue
             # DOCS case
             elif len(row) == 3:
