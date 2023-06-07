@@ -1,18 +1,24 @@
 import sys
+import os
 import json
 import sqlite3
 import click
 from ranx import Qrels, Run, evaluate
 
-from config.utils import logger, DB_PATH
+from config.utils import logger, VOLUME_PATH, DB_NAME_MSMARCO, DB_NAME_VK
 
 
 # python metrics_calc/main.py eval QRELS test_exp
 @click.command()
+@click.argument("db_name")
 @click.argument("qrels_table")
 @click.argument("exp_name")
-def eval(qrels_table, exp_name):
-    logger.debug(f"Start evaluate with params: {qrels_table, exp_name}")
+def eval(db_name, qrels_table, exp_name):
+    if db_name != DB_NAME_VK and db_name != DB_NAME_MSMARCO:
+        logger.error(f"Wrong DB name: {db_name} (available: {DB_NAME_VK, DB_NAME_MSMARCO})")
+    db_path = os.path.join(VOLUME_PATH, f'{db_name}.db')
+
+    logger.debug(f"Start evaluate with params: {db_name, qrels_table, exp_name}")
 
     experiments_runs_path = f"experiments_runs/{exp_name}_run.jsonl"
 
@@ -21,7 +27,7 @@ def eval(qrels_table, exp_name):
 
     logger.debug(f"RUN dict length: {len(run_dict)}")
 
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(db_path)
     c = conn.cursor()
     query = f"SELECT * FROM {qrels_table}"
     qrels_dict = {}

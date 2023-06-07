@@ -1,1 +1,30 @@
-{"test_exp": 0.9609895509434064}{"test_exp": 0.9609895509434064}{"zero_hyp": 0.861317370512985}{"zero_queries": 0.8345479636252302}{"test_exp": 0.9609895509434064}{"no_queries_no_preprocess": 9.62834585018294e-06}{"no_queries_final_text": 0.8345479636252302}
+{"test_exp": 0.9609895509434064}
+{"test_exp": 0.9609895509434064}
+{"zero_hyp": 0.861317370512985}
+{"zero_queries": 0.8345479636252302}
+{"test_exp": 0.9609895509434064}
+{"no_queries_no_preprocess": 9.62834585018294e-06}
+{"no_queries_final_text": 0.8345479636252302}
+{"2_exp": 0.861317370512985}
+{"Einmalumdiewelt_T5_Base_GNAD_exp": 0.8642333792863728}
+{"pszemraj_long_t5_tglobal_base_16384_book_summary_exp": 0.8674387380534293}
+{"docs_exp": 0.861317370512985}
+{"t5_based_exp": 0.8634847528687406}
+{"QUERIES_pszemraj_long_t5_tglobal_base_16384_book_summary_x2_exp": 0.8660863097142187}
+{"QUERIES_pszemraj_long_t5_tglobal_base_16384_book_summary_x5_exp": 0.8578178299291159}
+{"facebook_bart_large_cnn_10_30_exp": 0.8640947115751435}
+{"doc2query_msmarco_t5_base_v1_10_64_5_exp": 0.8852422083948477}
+{"doc2query_all_t5_base_v1_10_64_5_exp": 0.8839330100413934}
+{"doc2query_all_with_prefix_t5_base_v1_10_64_5_exp": 0.8803210784511585}
+{"transformers_pipelines_text2text_generation_SummarizationPipeline_object_at_0x7f260b8e0730__384_5_answer2question__exp": 0.879182068935168}
+{"doc2query_msmarco_t5_base_v1_320_5_exp": 0.8854012986466873}
+{"JOINED_doc2query_msmarco_t5_base_v1_224_3__chunks_process_exp": 0.8858908562225665}
+{"JOINED_doc2query_msmarco_t5_base_v1_320_10__exp": 0.8918905611098249}
+{"JOINED_doc2query_msmarco_t5_base_v1__min_len_10_max_len_64_num_gen_15_seq_len_320__exp": 0.8965773717561984}
+{"JOINED_doc2query_msmarco_t5_base_v1__min_len_10_max_len_30_num_gen_20_seq_len_320__exp": 0.8966653053182841}
+{"JOINED_doc2query_all_t5_base_v1__min_len_10_max_len_30_num_gen_20_seq_len_320__exp": 0.8960697760061243}
+{"JOINED_doc2query_all_t5_base_v1__min_len_5_max_len_30_num_gen_30_seq_len_320__exp": 0.8966368719394926}
+{"JOINED_doc2query_all_with_prefix_t5_base_v1__min_len_5_max_len_30_num_gen_30_seq_len_320__exp": 0.8951231762534084}
+{"vk_docs_exp": 0.0}
+{"vk_docs_exp": 0.7542448146871544}
+{"vk_joined_exp": 0.9811971483585512}{"joined_exp": 0.9811971483585512}{"docs_exp": 0.7542448146871544}{"docs_exp": 0.861317370512985}{"joined_exp": 0.9609895509434064}{"msmarco_docs_exp": 0.861317370512985}{"msmarco_JOINED_doc2query_msmarco_t5_base_v1__min_len_5_max_len_30_num_gen_30_seq_len_320__exp": 0.899753379185585}{"vk_joined_exp": 0.9811971483585512}

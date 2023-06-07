@@ -12,11 +12,38 @@ source .env/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Create and run DB container:
+### 2. Create DB (``db_name`` = ``vk`` or ``msmarco``):
 ```
 docker build -t db_red .
-docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to_project/gen_query_red_made/data:/data db_red ./db_init.sh``
+docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to_project/gen_query_red_made/data:/data db_red ./db_init.sh <DB_NAME>``
 ```
+- DB_NAME - msmarco/vk <br>
+
+Test example (creating ``msmarco.db`` and ``vk.db``):
+```
+docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to_project/gen_query_red_made/data:/data db_red ./db_init.sh msmarco``
+docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to_project/gen_query_red_made/data:/data db_red ./db_init.sh vk``
+```
+
+### Run experiment
+
+Build docker image for indexing documents and performing searching: <br>
+``docker build search_engine/ -t search_engine:0.3``
+
+Build docker image for metrics calculation: <br>
+``docker build metrics_calc/ -t metrics_calc:0.3``
+
+Run experiment: <br>
+``./pipeline.sh <DB_NAME> <DATA_TABLE>``
+
+- DB_NAME - msmarco/vk <br>
+- DATA_TABLE - DOCS/JOINED <br>
+
+Test example (run experiment on ``joined`` table in ``vk`` DB):
+```
+./pipeline.sh vk joined
+```
+
 
 ### 3. Iterator usage:
 ``python iterator.py table_name batch_size shuffle``
@@ -28,7 +55,6 @@ docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to
 Example (get ``shuffled`` data from table/view ``joined`` with ``batch_size=16``):
 
 ``python iterator.py joined 16 True``
-
 
 
 Iterator's response:
