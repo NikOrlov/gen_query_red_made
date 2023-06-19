@@ -28,8 +28,8 @@ docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to
 
 Test example (creating ``msmarco.db`` and ``vk.db``):
 ```
-docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to_project/gen_query_red_made/data:/data db_red ./db_init.sh msmarco
-docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to_project/gen_query_red_made/data:/data db_red ./db_init.sh vk
+docker run -it -v $(pwd)/volume:/volume -v $(pwd)/data:/data db_red ./db_init.sh msmarco
+docker run -it -v $(pwd)/volume:/volume -v $(pwd)/data:/data db_red ./db_init.sh vk
 ```
 
 ### Run experiment
