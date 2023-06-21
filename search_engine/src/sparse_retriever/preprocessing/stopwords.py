@@ -36,7 +36,7 @@ supported_languages = {
 
 
 def _get_stopwords(lang: str) -> List[str]:
-    nltk.download("stopwords", quiet=True)
+    nltk.download("stopwords", quiet=False)
     assert (
         lang.lower() in supported_languages
     ), f"Stop-words for {lang.capitalize()} are not available."

@@ -43,7 +43,7 @@ class QueryGenerator:
 
         df_batch = pd.DataFrame(batch, columns=["id", "doc_id", "data"])
         df_batch["query_id"] = df_batch["doc_id"]
-        documents = df_batch["data"]
+        documents = df_batch["data"].tolist()
 
         if self.model:
             generated_qs = self.model(documents)

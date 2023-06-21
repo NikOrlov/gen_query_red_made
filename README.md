@@ -1,9 +1,16 @@
 All commands must be executed in the project directory (``gen_query_red_made``):
-### 0. Download extended docs data (optional)
+### 0. Download extended docs and VK data (optional)
 By default DB contains docs, only represented in qrels (5185 docs), in case if you want to test pipeline on large amount of docs, you can download larger data.tsv file: 
 
 - download and extract data-file from [Google drive (5 gb, 400k docs)](https://drive.google.com/file/d/1rF6nZE-z32lR2A-AS1gVZUL4mDKP-C4O/view?usp=sharing) 
-- replace existing: ``mv docs_400k.tsv data/docs.tsv``
+- replace existing: ``mv docs_400k.tsv data/msmarco/docs.tsv``
+<br><br>
+
+To perform operations with VK dataset:
+- download vk-dataset files ``docs.tsv``, ``queries.tsv``, ``qrels.tsv``
+- create directory ``data/vk``
+- move downloaded files to ``data/vk/*``
+
 
 ### 1. Create virtual environment:
 ```
@@ -12,11 +19,38 @@ source .env/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Create and run DB container:
+### 2. Create DB (``db_name`` = ``vk`` or ``msmarco``):
 ```
 docker build -t db_red .
-docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to_project/gen_query_red_made/data:/data db_red ./db_init.sh``
+docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to_project/gen_query_red_made/data:/data db_red ./db_init.sh <DB_NAME>
 ```
+- DB_NAME - msmarco/vk <br>
+
+Test example (creating ``msmarco.db`` and ``vk.db``):
+```
+docker run -it -v $(pwd)/volume:/volume -v $(pwd)/data:/data db_red ./db_init.sh msmarco
+docker run -it -v $(pwd)/volume:/volume -v $(pwd)/data:/data db_red ./db_init.sh vk
+```
+
+### Run experiment
+
+Build docker image for indexing documents and performing searching: <br>
+``docker build search_engine/ -t search_engine:0.3``
+
+Build docker image for metrics calculation: <br>
+``docker build metrics_calc/ -t metrics_calc:0.3``
+
+Run experiment: <br>
+``./pipeline.sh <DB_NAME> <DATA_TABLE>``
+
+- DB_NAME - msmarco/vk <br>
+- DATA_TABLE - DOCS/JOINED <br>
+
+Test example (run experiment on ``joined`` table in ``vk`` DB):
+```
+./pipeline.sh vk joined
+```
+
 
 ### 3. Iterator usage:
 ``python iterator.py table_name batch_size shuffle``
@@ -28,7 +62,6 @@ docker run -it -v /path_to_project/gen_query_red_made/volume:/volume -v /path_to
 Example (get ``shuffled`` data from table/view ``joined`` with ``batch_size=16``):
 
 ``python iterator.py joined 16 True``
-
 
 
 Iterator's response:

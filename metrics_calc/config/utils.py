@@ -1,6 +1,8 @@
 from loguru import logger
 
-DB_PATH = "../volume/db/project.db"
+VOLUME_PATH = "../volume/db/"
+DB_NAME_MSMARCO = "msmarco"
+DB_NAME_VK = "vk"
 
 EXPERIMENT_INIT = (
     "DROP TABLE IF EXISTS {TABLE_QUERIES}; "

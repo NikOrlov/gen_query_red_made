@@ -5,19 +5,27 @@ import click
 import json
 from src.sparse_retriever.sparse_retriever import SparseRetriever as SearchEngine
 
-from config.utils import logger, DB_PATH
+from config.utils import logger, VOLUME_PATH, DB_NAME_MSMARCO, DB_NAME_VK
 
 
 # python search_engine/main.py start-run QUERIES test_exp
 @click.command()
+@click.argument("db_name")
 @click.argument("queries_table")
 @click.argument("exp_name")
 @click.option("--b", default=0.75)
 @click.option("--k", default=1.2)
 @click.option("--cutoff", default=100)
-def start_run(queries_table, exp_name, b, k, cutoff):
+def start_run(db_name, queries_table, exp_name, b, k, cutoff):
+    if db_name != DB_NAME_VK and db_name != DB_NAME_MSMARCO:
+        logger.error(f"Wrong DB name: {db_name} (available: {DB_NAME_VK, DB_NAME_MSMARCO})")
+
+    db_path = os.path.join(VOLUME_PATH, f'{db_name}.db')
+
     logger.info(
         f"Start handling queries with params: \n"
+        f"db_name: {db_name} \n"
+        f"db_path: {db_path} \n"
         f"queries_table: {queries_table}, \n"
         f"exp_name: {exp_name}, \n"
         f"b: {b}, \n"
@@ -25,7 +33,7 @@ def start_run(queries_table, exp_name, b, k, cutoff):
         f"cutoff: {cutoff}"
     )
 
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(db_path)
     c = conn.cursor()
     query = f"SELECT * FROM {queries_table}"
     se = SearchEngine.load(f"{exp_name}_index")
@@ -59,11 +67,17 @@ def start_run(queries_table, exp_name, b, k, cutoff):
 
 # python search_engine/main.py index JOINED test_exp
 @click.command()
+@click.argument("db_name")
 @click.argument("joined_table_name")
 @click.argument("exp_name")
 @click.option("--row_limit", default=False)
-def index(joined_table_name, exp_name, row_limit):
-    logger.info(f"Start indexing documents with params: {joined_table_name, row_limit}")
+def index(db_name, joined_table_name, exp_name, row_limit):
+    if db_name != DB_NAME_VK and db_name != DB_NAME_MSMARCO:
+        logger.error(f"Wrong DB name: {db_name} (available: {DB_NAME_VK, DB_NAME_MSMARCO})")
+
+    db_path = os.path.join(VOLUME_PATH, f'{db_name}.db')
+
+    logger.info(f"Start indexing documents with params: {db_name, joined_table_name, row_limit}")
 
     try:
         row_limit = int(row_limit)
@@ -74,7 +88,7 @@ def index(joined_table_name, exp_name, row_limit):
         exit(1)
 
     docs_generator = SearchEngine.collection_generator_from_db(
-        sql_db_path=DB_PATH, table_name=joined_table_name, row_limit=row_limit
+        sql_db_path=db_path, table_name=joined_table_name, row_limit=row_limit
     )
 
     se = SearchEngine(f"{exp_name}_index").index(docs_generator)
