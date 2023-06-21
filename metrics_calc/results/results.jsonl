@@ -25,6 +25,3 @@
 {"JOINED_doc2query_all_t5_base_v1__min_len_10_max_len_30_num_gen_20_seq_len_320__exp": 0.8960697760061243}
 {"JOINED_doc2query_all_t5_base_v1__min_len_5_max_len_30_num_gen_30_seq_len_320__exp": 0.8966368719394926}
 {"JOINED_doc2query_all_with_prefix_t5_base_v1__min_len_5_max_len_30_num_gen_30_seq_len_320__exp": 0.8951231762534084}
-{"vk_docs_exp": 0.0}
-{"vk_docs_exp": 0.7542448146871544}
-{"vk_joined_exp": 0.9811971483585512}{"joined_exp": 0.9811971483585512}{"docs_exp": 0.7542448146871544}{"docs_exp": 0.861317370512985}{"joined_exp": 0.9609895509434064}{"msmarco_docs_exp": 0.861317370512985}{"msmarco_JOINED_doc2query_msmarco_t5_base_v1__min_len_5_max_len_30_num_gen_30_seq_len_320__exp": 0.899753379185585}{"vk_joined_exp": 0.9811971483585512}
