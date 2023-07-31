@@ -105,9 +105,9 @@ Then use search_engine.sh to interact with service:
 Command format:
 ``./search_engine.sh <COMMAND> <SQL TABLE> <EXPERIMENT NAME>``
 
-COMMAND - index/start-run <br>
-SQL TABLE - DOCS/JOINED <br>
-EXPERIMENT - any string u want <br>
+```COMMAND``` - index/start-run <br>
+```SQL TABLE``` - DOCS/JOINED <br>
+```EXPERIMENT``` - any string u want <br>
 
 Command example:
 ``./search_engine.sh index DOCS no_queries_test ``
